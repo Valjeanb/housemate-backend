@@ -49,14 +49,14 @@
 </database>
 
 <package_management>
-  CRITICAL: After using `bun add` to install any package, you MUST immediately commit the updated package.json:
+  Runtime: bun (not npm). After `bun add <pkg>`, both `package.json` AND `bun.lock` need to be saved — the VibeCode-era rule about committing immediately no longer applies (you're in Claude Code now), but if the user uses git, that's still good practice.
 
-  ```bash
-  bun add some-package
-  git add package.json bun.lock
-  git commit -m "chore: add some-package dependency"
+  CRITICAL: This backend lives inside OneDrive. **Never run `bun install` directly in this folder.** Junction `node_modules` to `C:\dev_modules\sitterhub_backend\` first:
+
+  ```powershell
+  cmd /c mklink /J node_modules C:\dev_modules\sitterhub_backend
+  bun install
   ```
 
-  Why: If package.json is not committed, the package will be lost when the sandbox restarts,
-  causing "Cannot find package" errors on the next session.
+  See root `Claude Code\CLAUDE.md` for the full node_modules-in-OneDrive policy.
 </package_management>
